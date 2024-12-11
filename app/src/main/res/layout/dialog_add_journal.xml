@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- 標題輸入 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp" />
+    <EditText
+        android:id="@+id/etTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter your title"
+        android:inputType="text" />
+
+    <!-- 日誌內容輸入 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Content"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp" />
+    <EditText
+        android:id="@+id/etContent"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:hint="Write your journal here"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:scrollbars="vertical" />
+
+    <!-- 心情指數 -->
+    <TextView
+        android:id="@+id/tvMood"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mood Index: 5"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp" />
+    <SeekBar
+        android:id="@+id/seekBarMood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="10"
+        android:progress="5" />
+</LinearLayout>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- 日期 -->
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2024-12-01"
+        android:textSize="14sp"
+        android:textColor="#888888" />
+
+    <!-- 標題 -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sample Title"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="4dp" />
+
+    <!-- 心情指數 -->
+    <TextView
+        android:id="@+id/tvMood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mood: 5"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp"
+        android:textColor="#555555" />
+</LinearLayout>
