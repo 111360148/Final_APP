@@ -1,5 +1,6 @@
 package com.example.daily;
 
+import android.content.Intent; // 用於啟動主畫面
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,13 +8,8 @@ import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.daily.Journal;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,7 +33,15 @@ public class JournalActivity extends AppCompatActivity {
         adapter = new JournalAdapter(journalList);
         recyclerView.setAdapter(adapter);
 
+        // 添加日誌條目按鈕
         findViewById(R.id.btnAddJournalEntry).setOnClickListener(v -> showAddJournalDialog());
+
+        // 返回主畫面按鈕
+        findViewById(R.id.btnBackToMain).setOnClickListener(v -> {
+            Intent intent = new Intent(JournalActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish(); // 可選，結束當前 Activity
+        });
     }
 
     private void showAddJournalDialog() {
@@ -53,8 +57,10 @@ public class JournalActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 tvMood.setText("Mood Index: " + progress);
             }
+
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {}
+
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
@@ -65,7 +71,7 @@ public class JournalActivity extends AppCompatActivity {
                     String title = etTitle.getText().toString();
                     String content = etContent.getText().toString();
                     int moodIndex = seekBarMood.getProgress();
-                    // Save data to the list or database
+                    // 保存日誌到列表
                     Journal journal = new Journal();
                     journal.setTitle(title);
                     journal.setContent(content);
