@@ -1,5 +1,6 @@
 package com.example.daily;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +30,15 @@ public class TransactionActivity extends AppCompatActivity {
         adapter = new TransactionAdapter(transactionList);
         recyclerView.setAdapter(adapter);
 
+        // 添加交易條目按鈕
         findViewById(R.id.btnAddTransactionEntry).setOnClickListener(v -> showAddTransactionDialog());
+
+        // 返回主畫面按鈕
+        findViewById(R.id.btnBackToMain).setOnClickListener(v -> {
+            Intent intent = new Intent(TransactionActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish(); // 可選，結束當前 Activity
+        });
     }
 
     private void showAddTransactionDialog() {
