@@ -42,6 +42,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        findViewById(R.id.btnAddRecord).setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, record.class);
+            startActivity(intent);
+        });
+
     }
 
 
