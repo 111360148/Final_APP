@@ -1,19 +1,19 @@
 package com.example.daily;
 
 public class Journal {
-    private String date;  // 日期
-    private String title; // 日誌標題
-    private String content; // 日誌內容
-    private String imageUri; // 圖片路徑
-    private int moodIndex; // 心情指數 (1~10)
+    private int id;
+    private String title;
+    private String content;
+    private int moodIndex;
+    private String date;
 
-    // Getters 和 Setters
-    public String getDate() {
-        return date;
+    // Getter 和 Setter 方法
+    public int getId() {
+        return id;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -32,19 +32,19 @@ public class Journal {
         this.content = content;
     }
 
-    public String getImageUri() {
-        return imageUri;
-    }
-
-    public void setImageUri(String imageUri) {
-        this.imageUri = imageUri;
-    }
-
     public int getMoodIndex() {
         return moodIndex;
     }
 
     public void setMoodIndex(int moodIndex) {
         this.moodIndex = moodIndex;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }
