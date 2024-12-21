@@ -62,23 +62,38 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
         if (cursor != null) {
             try {
+                // 检查是否有数据
                 if (cursor.moveToFirst()) {
                     do {
                         Journal journal = new Journal();
-                        journal.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)));
-                        journal.setTitle(cursor.getString(cursor.getColumnIndex(COLUMN_TITLE)));
-                        journal.setContent(cursor.getString(cursor.getColumnIndex(COLUMN_CONTENT)));
-                        journal.setMoodIndex(cursor.getInt(cursor.getColumnIndex(COLUMN_MOOD)));
-                        journal.setDate(cursor.getString(cursor.getColumnIndex(COLUMN_DATE)));
-                        journalList.add(journal);
+
+                        // 安全获取列索引和列数据
+                        int idIndex = cursor.getColumnIndex(COLUMN_ID);
+                        int titleIndex = cursor.getColumnIndex(COLUMN_TITLE);
+                        int contentIndex = cursor.getColumnIndex(COLUMN_CONTENT);
+                        int moodIndex = cursor.getColumnIndex(COLUMN_MOOD);
+                        int dateIndex = cursor.getColumnIndex(COLUMN_DATE);
+
+                        // 确保列索引有效
+                        if (idIndex != -1 && titleIndex != -1 && contentIndex != -1 && moodIndex != -1 && dateIndex != -1) {
+                            journal.setId(cursor.getInt(idIndex));
+                            journal.setTitle(cursor.getString(titleIndex));
+                            journal.setContent(cursor.getString(contentIndex));
+                            journal.setMoodIndex(cursor.getInt(moodIndex));
+                            journal.setDate(cursor.getString(dateIndex));
+                            journalList.add(journal);
+                        }
                     } while (cursor.moveToNext());
                 }
             } catch (Exception e) {
                 e.printStackTrace(); // 捕获异常并打印
             } finally {
-                cursor.close(); // 确保最终关闭 cursor
+                if (cursor != null && !cursor.isClosed()) {
+                    cursor.close(); // 确保最终关闭 cursor
+                }
             }
         }
+
         db.close();
         return journalList;
     }
