@@ -12,9 +12,18 @@ import java.util.List;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder> {
     private List<Transaction> transactionList;
+    private OnItemClickListener onItemClickListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(Transaction transaction);
+    }
 
     public TransactionAdapter(List<Transaction> transactionList) {
         this.transactionList = transactionList;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
     }
 
     @NonNull
@@ -28,8 +37,16 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     public void onBindViewHolder(@NonNull TransactionViewHolder holder, int position) {
         Transaction transaction = transactionList.get(position);
         holder.tvTitle.setText(transaction.getTitle());
-        holder.tvAmount.setText(String.format("Amount: $%.2f", transaction.getAmount()));
+        holder.tvAmount.setText(String.format("Amount: $%.2f (%s)", transaction.getAmount(), transaction.getType()));
         holder.tvDate.setText(transaction.getDate());
+
+
+        // 設置點擊事件
+        holder.itemView.setOnClickListener(v -> {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(transaction);
+            }
+        });
     }
 
     @Override
@@ -48,4 +65,5 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         }
     }
 }
+
 
