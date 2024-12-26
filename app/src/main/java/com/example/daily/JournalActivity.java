@@ -35,7 +35,6 @@ public class JournalActivity extends AppCompatActivity {
         adapter = new JournalAdapter(journalList);
         recyclerView.setAdapter(adapter);
 
-        // 設置點擊事件監聽器
         adapter.setOnJournalClickListener(this::showEditJournalDialog);
 
         loadJournalsFromDatabase();
@@ -53,9 +52,32 @@ public class JournalActivity extends AppCompatActivity {
         journalList.clear();
         journalList.addAll(dbHelper.getAllJournals());
         adapter.notifyDataSetChanged();
+        displayMoodAverage();
     }
 
-    // 顯示添加日誌對話框
+    private void displayMoodAverage() {
+        List<Journal> last7Journals = getLast7Journals();
+
+        if (last7Journals.size() > 0) {
+            int totalMoodIndex = 0;
+            for (Journal journal : last7Journals) {
+                totalMoodIndex += journal.getMoodIndex();
+            }
+            float averageMood = totalMoodIndex / (float) last7Journals.size();
+            TextView tvAverageMood = findViewById(R.id.tvAverageMood);
+            tvAverageMood.setText("Average Mood Index: " + averageMood);
+        }
+    }
+
+    private List<Journal> getLast7Journals() {
+        List<Journal> last7 = new ArrayList<>();
+        int size = journalList.size();
+        for (int i = Math.max(0, size - 7); i < size; i++) {
+            last7.add(journalList.get(i));
+        }
+        return last7;
+    }
+
     private void showAddJournalDialog() {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_add_journal, null);
 
@@ -140,5 +162,4 @@ public class JournalActivity extends AppCompatActivity {
                 })
                 .show();
     }
-
 }

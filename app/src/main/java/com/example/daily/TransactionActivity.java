@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,6 +47,7 @@ public class TransactionActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
+        updateSummary();
     }
 
     private void showAddTransactionDialog() {
@@ -90,6 +92,7 @@ public class TransactionActivity extends AppCompatActivity {
                         transactionList.clear();
                         transactionList.addAll(dbHelper.getAllTransactions());
                         adapter.notifyDataSetChanged();
+                        updateSummary(); // Update the summary after adding a new transaction
                         Toast.makeText(this, "Transaction added successfully", Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -105,7 +108,6 @@ public class TransactionActivity extends AppCompatActivity {
         RadioGroup rgTransactionType = view.findViewById(R.id.rgTransactionType);
 
         etTitle.setText(transaction.getTitle());
-
         etAmount.setText(String.valueOf(transaction.getAmount()));
         if ("Income".equals(transaction.getType())) {
             rgTransactionType.check(R.id.rbIncome);
@@ -118,7 +120,6 @@ public class TransactionActivity extends AppCompatActivity {
                 .setPositiveButton("Update", (dialog, which) -> {
                     String title = etTitle.getText().toString();
                     String amountStr = etAmount.getText().toString();
-                    // 將amount轉換為整數
                     int amount = amountStr.isEmpty() ? 0 : Integer.parseInt(amountStr);
 
                     int selectedId = rgTransactionType.getCheckedRadioButtonId();
@@ -140,6 +141,7 @@ public class TransactionActivity extends AppCompatActivity {
                         transactionList.clear();
                         transactionList.addAll(dbHelper.getAllTransactions());
                         adapter.notifyDataSetChanged();
+                        updateSummary(); // Update the summary after updating a transaction
                         Toast.makeText(this, "Transaction updated successfully", Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -148,10 +150,34 @@ public class TransactionActivity extends AppCompatActivity {
                     transactionList.clear();
                     transactionList.addAll(dbHelper.getAllTransactions());
                     adapter.notifyDataSetChanged();
+                    updateSummary();
                     Toast.makeText(this, "Transaction deleted successfully", Toast.LENGTH_SHORT).show();
                 })
                 .setNeutralButton("Cancel", null)
                 .show();
+    }
+
+    private void updateSummary() {
+        int totalIncome = 0;
+        int totalExpense = 0;
+
+        for (Transaction transaction : transactionList) {
+            if ("Income".equals(transaction.getType())) {
+                totalIncome += transaction.getAmount();
+            } else if ("Expense".equals(transaction.getType())) {
+                totalExpense += transaction.getAmount();
+            }
+        }
+
+        int total = totalIncome - totalExpense;
+
+        TextView tvIncome = findViewById(R.id.tvIncome);
+        TextView tvExpense = findViewById(R.id.tvExpense);
+        TextView tvTotal = findViewById(R.id.tvTotal);
+
+        tvIncome.setText("Income: $" + totalIncome);
+        tvExpense.setText("Expense: $" + totalExpense);
+        tvTotal.setText("Total Assets: $" + total);
     }
 
     @Override
