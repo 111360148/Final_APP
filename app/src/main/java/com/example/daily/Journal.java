@@ -7,7 +7,6 @@ public class Journal {
     private int moodIndex;
     private String date;
 
-    // Getter 和 Setter 方法
     public int getId() {
         return id;
     }

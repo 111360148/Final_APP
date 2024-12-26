@@ -12,14 +12,14 @@ import java.util.List;
 public class SQLiteTransaction extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "transactions.db";
-    private static final int DATABASE_VERSION = 2; // 更新版本號
+    private static final int DATABASE_VERSION = 2;
 
     private static final String TABLE_NAME = "transactions";
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_TITLE = "title";
     private static final String COLUMN_AMOUNT = "amount";
     private static final String COLUMN_DATE = "date";
-    private static final String COLUMN_TYPE = "type"; // 新增欄位
+    private static final String COLUMN_TYPE = "type";
 
     public SQLiteTransaction(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -47,13 +47,27 @@ public class SQLiteTransaction extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_TITLE, transaction.getTitle());
-        values.put(COLUMN_AMOUNT, transaction.getAmount());
+        values.put(COLUMN_AMOUNT, (int)transaction.getAmount());
         values.put(COLUMN_DATE, transaction.getDate());
-        values.put(COLUMN_TYPE, transaction.getType()); // 儲存類型
+        values.put(COLUMN_TYPE, transaction.getType());
 
         long rowId = db.insert(TABLE_NAME, null, values);
         db.close();
         return rowId;
+    }
+    public int updateTransaction(Transaction transaction) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("title", transaction.getTitle());
+        values.put("amount", (int)transaction.getAmount());
+        values.put("type", transaction.getType());
+
+        return db.update("transactions", values, "id = ?", new String[]{String.valueOf(transaction.getId())});
+    }
+    public void deleteTransaction(Transaction transaction) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete("transactions", "id = ?", new String[]{String.valueOf(transaction.getId())});
+        db.close();
     }
 
     public List<Transaction> getAllTransactions() {
@@ -67,16 +81,30 @@ public class SQLiteTransaction extends SQLiteOpenHelper {
                 if (cursor.moveToFirst()) {
                     do {
                         Transaction transaction = new Transaction();
-                        transaction.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)));
-                        transaction.setTitle(cursor.getString(cursor.getColumnIndex(COLUMN_TITLE)));
-                        transaction.setAmount(cursor.getDouble(cursor.getColumnIndex(COLUMN_AMOUNT)));
-                        transaction.setDate(cursor.getString(cursor.getColumnIndex(COLUMN_DATE)));
-                        transaction.setType(cursor.getString(cursor.getColumnIndex(COLUMN_TYPE)));
-                        transactionList.add(transaction);
+
+                        int idIndex = cursor.getColumnIndex(COLUMN_ID);
+                        int titleIndex = cursor.getColumnIndex(COLUMN_TITLE);
+                        int amountIndex = cursor.getColumnIndex(COLUMN_AMOUNT);
+                        int dateIndex = cursor.getColumnIndex(COLUMN_DATE);
+                        int typeIndex = cursor.getColumnIndex(COLUMN_TYPE);
+
+                        if (idIndex != -1 && titleIndex != -1 && amountIndex != -1 && dateIndex != -1 && typeIndex != -1) {
+                            transaction.setId(cursor.getInt(idIndex));
+                            transaction.setTitle(cursor.getString(titleIndex));
+                            transaction.setAmount(cursor.getInt(amountIndex));
+                            transaction.setDate(cursor.getString(dateIndex));
+                            transaction.setType(cursor.getString(typeIndex));
+
+                            transactionList.add(transaction);
+                        }
                     } while (cursor.moveToNext());
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
             } finally {
-                cursor.close();
+                if (cursor != null && !cursor.isClosed()) {
+                    cursor.close();
+                }
             }
         }
         db.close();

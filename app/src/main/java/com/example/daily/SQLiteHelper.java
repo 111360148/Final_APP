@@ -40,8 +40,12 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
+    public void deleteJournal(Journal journal) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, COLUMN_ID + " = ?", new String[]{String.valueOf(journal.getId())});
+        db.close();
+    }
 
-    // 插入日誌
     public void addJournal(Journal journal) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -54,27 +58,23 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    // 获取所有日誌
+
     public List<Journal> getAllJournals() {
         List<Journal> journalList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, null);
+        Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, COLUMN_DATE + " DESC");
 
         if (cursor != null) {
             try {
-                // 检查是否有数据
                 if (cursor.moveToFirst()) {
                     do {
                         Journal journal = new Journal();
-
-                        // 安全获取列索引和列数据
                         int idIndex = cursor.getColumnIndex(COLUMN_ID);
                         int titleIndex = cursor.getColumnIndex(COLUMN_TITLE);
                         int contentIndex = cursor.getColumnIndex(COLUMN_CONTENT);
                         int moodIndex = cursor.getColumnIndex(COLUMN_MOOD);
                         int dateIndex = cursor.getColumnIndex(COLUMN_DATE);
 
-                        // 确保列索引有效
                         if (idIndex != -1 && titleIndex != -1 && contentIndex != -1 && moodIndex != -1 && dateIndex != -1) {
                             journal.setId(cursor.getInt(idIndex));
                             journal.setTitle(cursor.getString(titleIndex));
@@ -86,15 +86,35 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                     } while (cursor.moveToNext());
                 }
             } catch (Exception e) {
-                e.printStackTrace(); // 捕获异常并打印
+                e.printStackTrace();
             } finally {
                 if (cursor != null && !cursor.isClosed()) {
-                    cursor.close(); // 确保最终关闭 cursor
+                    cursor.close();
                 }
             }
         }
 
         db.close();
         return journalList;
+    }
+
+
+    public void updateJournal(Journal journal) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_TITLE, journal.getTitle());
+        values.put(COLUMN_CONTENT, journal.getContent());
+        values.put(COLUMN_MOOD, journal.getMoodIndex());
+        values.put(COLUMN_DATE, journal.getDate());
+
+        db.update(TABLE_NAME, values, COLUMN_ID + " = ?", new String[]{String.valueOf(journal.getId())});
+        db.close();
+    }
+
+
+    public void deleteJournal(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
+        db.close();
     }
 }

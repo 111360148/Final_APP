@@ -2,13 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center">
 
     <Button
         android:id="@+id/btnAddTransactionEntry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Transaction Entry"
+        android:backgroundTint="#98afe5"
+        android:textColor="#FFFFFF"
         android:layout_gravity="center" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -20,9 +23,11 @@
 
     <Button
         android:id="@+id/btnBackToMain"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Back to Main"
+        android:backgroundTint="#98afe5"
+        android:textColor="#FFFFFF"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp" />
 

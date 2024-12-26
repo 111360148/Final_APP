@@ -18,45 +18,44 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import com.example.daily.Journal;
-
 
 public class JournalActivity extends AppCompatActivity {
     private List<Journal> journalList = new ArrayList<>();
     private JournalAdapter adapter;
-    private SQLiteHelper dbHelper; // 用來管理 SQLite
+    private SQLiteHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_journal);
 
-        dbHelper = new SQLiteHelper(this); // 初始化 SQLiteHelper
+        dbHelper = new SQLiteHelper(this);
         RecyclerView recyclerView = findViewById(R.id.journalRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new JournalAdapter(journalList);
         recyclerView.setAdapter(adapter);
 
-        // 加载数据库中的日记
+        // 設置點擊事件監聽器
+        adapter.setOnJournalClickListener(this::showEditJournalDialog);
+
         loadJournalsFromDatabase();
 
-        // 添加日誌條目按鈕
         findViewById(R.id.btnAddJournalEntry).setOnClickListener(v -> showAddJournalDialog());
 
-        // 返回主畫面按鈕
         findViewById(R.id.btnBackToMain).setOnClickListener(v -> {
             Intent intent = new Intent(JournalActivity.this, MainActivity.class);
             startActivity(intent);
-            finish(); // 可選，結束當前 Activity
+            finish();
         });
     }
 
     private void loadJournalsFromDatabase() {
-        journalList.clear(); // 清空现有数据
-        journalList.addAll(dbHelper.getAllJournals()); // 从数据库加载日记
-        adapter.notifyDataSetChanged(); // 刷新列表
+        journalList.clear();
+        journalList.addAll(dbHelper.getAllJournals());
+        adapter.notifyDataSetChanged();
     }
 
+    // 顯示添加日誌對話框
     private void showAddJournalDialog() {
         View view = LayoutInflater.from(this).inflate(R.layout.dialog_add_journal, null);
 
@@ -84,16 +83,62 @@ public class JournalActivity extends AppCompatActivity {
                     String title = etTitle.getText().toString();
                     String content = etContent.getText().toString();
                     int moodIndex = seekBarMood.getProgress();
-                    // 保存日誌到 SQLite
                     Journal journal = new Journal();
                     journal.setTitle(title);
                     journal.setContent(content);
                     journal.setMoodIndex(moodIndex);
                     journal.setDate(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
-                    dbHelper.addJournal(journal); // 使用 SQLiteHelper 保存日记
-                    loadJournalsFromDatabase(); // 重新加载数据库中的日记
+                    dbHelper.addJournal(journal);
+                    loadJournalsFromDatabase();
                 })
                 .setNegativeButton("Cancel", null)
                 .show();
     }
+
+    private void showEditJournalDialog(Journal journal) {
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_add_journal, null);
+
+        EditText etTitle = view.findViewById(R.id.etTitle);
+        EditText etContent = view.findViewById(R.id.etContent);
+        SeekBar seekBarMood = view.findViewById(R.id.seekBarMood);
+        TextView tvMood = view.findViewById(R.id.tvMood);
+
+        etTitle.setText(journal.getTitle());
+        etContent.setText(journal.getContent());
+        seekBarMood.setProgress(journal.getMoodIndex());
+        tvMood.setText("Mood Index: " + journal.getMoodIndex());
+
+        seekBarMood.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                tvMood.setText("Mood Index: " + progress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+
+        new AlertDialog.Builder(this)
+                .setView(view)
+                .setPositiveButton("Update", (dialog, which) -> {
+                    String title = etTitle.getText().toString();
+                    String content = etContent.getText().toString();
+                    int moodIndex = seekBarMood.getProgress();
+                    journal.setTitle(title);
+                    journal.setContent(content);
+                    journal.setMoodIndex(moodIndex);
+                    dbHelper.updateJournal(journal);
+                    loadJournalsFromDatabase();
+                })
+                .setNegativeButton("Cancel", null)
+                .setNeutralButton("Delete", (dialog, which) -> {
+                    dbHelper.deleteJournal(journal);
+                    loadJournalsFromDatabase();
+                })
+                .show();
+    }
+
 }
