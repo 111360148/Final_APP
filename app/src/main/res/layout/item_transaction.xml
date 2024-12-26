@@ -27,6 +27,12 @@
         android:text="Date"
         android:textSize="12sp" />
 
+    <!-- 添加一個顯示交易類型的 TextView -->
+    <TextView
+        android:id="@+id/tvTransactionType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Income/Expense"
+        android:textSize="14sp" />
+
 </LinearLayout>
-
-

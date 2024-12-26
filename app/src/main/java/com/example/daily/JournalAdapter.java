@@ -13,13 +13,16 @@ import java.util.List;
 public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.JournalViewHolder> {
 
     private List<Journal> journalList;
+    private OnJournalClickListener listener;
 
-    // 构造方法
     public JournalAdapter(List<Journal> journalList) {
         this.journalList = journalList;
     }
 
-    // 创建新的视图
+    public void setOnJournalClickListener(OnJournalClickListener listener) {
+        this.listener = listener;
+    }
+
     @NonNull
     @Override
     public JournalViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -27,28 +30,33 @@ public class JournalAdapter extends RecyclerView.Adapter<JournalAdapter.JournalV
         return new JournalViewHolder(view);
     }
 
-    // 绑定数据到视图
     @Override
     public void onBindViewHolder(@NonNull JournalViewHolder holder, int position) {
         Journal journal = journalList.get(position);
         holder.tvDate.setText(journal.getDate());
         holder.tvTitle.setText(journal.getTitle());
         holder.tvMood.setText("Mood: " + journal.getMoodIndex());
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onJournalClick(journal);
+            }
+        });
     }
 
-    // 获取数据的总数量
     @Override
     public int getItemCount() {
         return journalList.size();
     }
 
-    // 更新数据源并通知适配器刷新视图
     public void updateJournalList(List<Journal> newJournalList) {
         this.journalList = newJournalList;
-        notifyDataSetChanged();  // 刷新数据
+        notifyDataSetChanged();
     }
 
-    // ViewHolder 类
+    public interface OnJournalClickListener {
+        void onJournalClick(Journal journal);
+    }
+
     static class JournalViewHolder extends RecyclerView.ViewHolder {
         TextView tvDate;
         TextView tvTitle;

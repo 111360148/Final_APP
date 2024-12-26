@@ -4,49 +4,38 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder> {
-    private List<Transaction> transactionList;
-    private OnItemClickListener onItemClickListener;
 
-    public interface OnItemClickListener {
-        void onItemClick(Transaction transaction);
+    private List<Transaction> transactionList;
+    private OnTransactionClickListener onTransactionClickListener;
+
+    // 定義點擊事件接口
+    public interface OnTransactionClickListener {
+        void onTransactionClick(Transaction transaction);
+    }
+
+    // 設置點擊事件監聽器
+    public void setOnTransactionClickListener(OnTransactionClickListener listener) {
+        this.onTransactionClickListener = listener;
     }
 
     public TransactionAdapter(List<Transaction> transactionList) {
         this.transactionList = transactionList;
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.onItemClickListener = listener;
-    }
-
-    @NonNull
     @Override
-    public TransactionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TransactionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_transaction, parent, false);
         return new TransactionViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TransactionViewHolder holder, int position) {
+    public void onBindViewHolder(TransactionViewHolder holder, int position) {
         Transaction transaction = transactionList.get(position);
-        holder.tvTitle.setText(transaction.getTitle());
-        holder.tvAmount.setText(String.format("Amount: $%.2f (%s)", transaction.getAmount(), transaction.getType()));
-        holder.tvDate.setText(transaction.getDate());
-
-
-        // 設置點擊事件
-        holder.itemView.setOnClickListener(v -> {
-            if (onItemClickListener != null) {
-                onItemClickListener.onItemClick(transaction);
-            }
-        });
+        holder.bind(transaction);
     }
 
     @Override
@@ -54,16 +43,32 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         return transactionList.size();
     }
 
-    static class TransactionViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTitle, tvAmount, tvDate;
+    class TransactionViewHolder extends RecyclerView.ViewHolder {
 
-        public TransactionViewHolder(@NonNull View itemView) {
+        private TextView tvTitle;
+        private TextView tvAmount;
+        private TextView tvDate;
+        private TextView tvType;
+
+        public TransactionViewHolder(View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tvTransactionTitle);
             tvAmount = itemView.findViewById(R.id.tvTransactionAmount);
             tvDate = itemView.findViewById(R.id.tvTransactionDate);
+            tvType = itemView.findViewById(R.id.tvTransactionType);
+
+            itemView.setOnClickListener(v -> {
+                if (onTransactionClickListener != null) {
+                    onTransactionClickListener.onTransactionClick(transactionList.get(getAdapterPosition()));
+                }
+            });
+        }
+
+        public void bind(Transaction transaction) {
+            tvTitle.setText(transaction.getTitle());
+            tvAmount.setText(String.valueOf(transaction.getAmount()));
+            tvDate.setText(transaction.getDate());
+            tvType.setText(transaction.getType());
         }
     }
 }
-
-

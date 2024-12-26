@@ -2,17 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center">
 
-    <!-- 添加日誌條目的按鈕 -->
     <Button
         android:id="@+id/btnAddJournalEntry"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Journal Entry"
+        android:backgroundTint="#ed9ece"
+        android:textColor="#FFFFFF"
         android:layout_marginTop="16dp" />
 
-    <!-- 日誌 RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/journalRecyclerView"
         android:layout_width="match_parent"
@@ -20,13 +21,13 @@
         android:layout_weight="1"
         android:layout_marginTop="16dp" />
 
-    <!-- 返回主畫面的按鈕 -->
     <Button
         android:id="@+id/btnBackToMain"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Back to Main"
         android:layout_marginTop="16dp"
+        android:backgroundTint="#ed9ece"
+        android:textColor="#FFFFFF"
         android:layout_marginBottom="16dp" />
-
 </LinearLayout>
