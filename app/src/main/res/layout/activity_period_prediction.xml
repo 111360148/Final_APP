@@ -56,6 +56,8 @@
             android:id="@+id/btnAdd"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:backgroundTint="#c394e1"
+            android:textColor="#FFFFFF"
             android:layout_weight="1"
             android:text="新增" />
 
@@ -63,6 +65,8 @@
             android:id="@+id/btnUpdate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:backgroundTint="#c394e1"
+            android:textColor="#FFFFFF"
             android:layout_weight="1"
             android:text="修改" />
 
@@ -70,6 +74,8 @@
             android:id="@+id/btnDelete"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:backgroundTint="#c394e1"
+            android:textColor="#FFFFFF"
             android:layout_weight="1"
             android:text="刪除" />
 
@@ -77,6 +83,8 @@
             android:id="@+id/btnSearch"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:backgroundTint="#c394e1"
+            android:textColor="#FFFFFF"
             android:layout_weight="1"
             android:text="搜尋" />
 
@@ -84,6 +92,8 @@
             android:id="@+id/btnShowAll"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:backgroundTint="#c394e1"
+            android:textColor="#FFFFFF"
             android:layout_weight="1"
             android:text="顯示全部" />
     </LinearLayout>
@@ -104,7 +114,8 @@
         android:layout_height="wrap_content"
         android:text="回到首頁"
         android:layout_marginTop="16dp"
-        android:backgroundTint="#FF6200EE"
+        android:backgroundTint="#c394e1"
         android:textColor="#FFFFFF"
         android:padding="12dp" />
 </LinearLayout>
+
