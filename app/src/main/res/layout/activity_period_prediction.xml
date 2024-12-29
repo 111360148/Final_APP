@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- 上次經期輸入 -->
+    <EditText
+        android:id="@+id/edtLastPeriod"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:hint="請輸入上次經期日期 (yyyy-MM-dd)"
+        android:inputType="text"
+        android:minHeight="48dp" />
+
+    <!-- 經期週期輸入 -->
+    <EditText
+        android:id="@+id/edtCycleLength"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:hint="請輸入經期週期 (天數)"
+        android:inputType="number"
+        android:minHeight="48dp" />
+
+    <!-- 搜尋ID輸入 -->
+    <EditText
+        android:id="@+id/edtSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:hint="請輸入記錄ID (僅限修改、刪除、搜尋)"
+        android:inputType="number"
+        android:minHeight="48dp" />
+
+    <!-- 顯示下次經期 -->
+    <TextView
+        android:id="@+id/txtNextPeriod"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="下次經期日期："
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp" />
+
+    <!-- 功能按鈕 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="5"
+        android:layout_marginBottom="16dp">
+
+        <Button
+            android:id="@+id/btnAdd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="新增" />
+
+        <Button
+            android:id="@+id/btnUpdate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="修改" />
+
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="刪除" />
+
+        <Button
+            android:id="@+id/btnSearch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="搜尋" />
+
+        <Button
+            android:id="@+id/btnShowAll"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="顯示全部" />
+    </LinearLayout>
+
+    <!-- 記錄清單 -->
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:dividerHeight="1dp"
+        android:background="#F5F5F5" />
+
+    <!-- 回到首頁按鈕 -->
+    <Button
+        android:id="@+id/btnBackToMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="回到首頁"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#FF6200EE"
+        android:textColor="#FFFFFF"
+        android:padding="12dp" />
+</LinearLayout>

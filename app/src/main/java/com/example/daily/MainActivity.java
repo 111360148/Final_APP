@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.btnAddRecord).setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, record.class);
+            Intent intent = new Intent(MainActivity.this, period_prediction.class);
             startActivity(intent);
         });
 
