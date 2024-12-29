@@ -58,7 +58,7 @@ public class period_prediction extends AppCompatActivity {
         btnSearch.setOnClickListener(v -> searchRecord());
         btnShowAll.setOnClickListener(v -> showAllRecords());
 
-        // 保留回到首頁按鈕功能
+        // 回到首頁按鈕功能
         btnBackToMain.setOnClickListener(v -> {
             Intent intent = new Intent(period_prediction.this, MainActivity.class);
             startActivity(intent);

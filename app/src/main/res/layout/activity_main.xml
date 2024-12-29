@@ -46,7 +46,11 @@
         android:id="@+id/tvExtraFeatures"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:text="額外功能"
+=======
+        android:text="額外功能(使用API)"
+>>>>>>> b9f325524bb2c8fee26eade33ff1713abc8e1ec6
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/btnAddRecord"
@@ -58,7 +62,11 @@
         android:id="@+id/btn_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:text="查詢場地"
+=======
+        android:text="臺北市體育局場地資訊"
+>>>>>>> b9f325524bb2c8fee26eade33ff1713abc8e1ec6
         app:layout_constraintTop_toBottomOf="@id/tvExtraFeatures"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
