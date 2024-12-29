@@ -11,11 +11,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Journal Page"
-<<<<<<< Updated upstream
-=======
         android:backgroundTint="#ed9ece"
         android:textColor="#FFFFFF"
->>>>>>> Stashed changes
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,6 +23,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Transaction Page"
+        android:backgroundTint="#98afe5"
+        android:textColor="#FFFFFF"
         app:layout_constraintTop_toBottomOf="@id/btnAddJournal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,6 +35,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="period prediction"
+        android:backgroundTint="#c394e1"
+        android:textColor="#FFFFFF"
         app:layout_constraintTop_toBottomOf="@id/btnAddTransaction"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

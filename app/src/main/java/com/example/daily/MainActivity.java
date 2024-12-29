@@ -2,32 +2,8 @@ package com.example.daily;
 
 import android.content.Intent;
 import android.os.Bundle;
-<<<<<<< Updated upstream
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.SeekBar;
-import android.widget.TextView;
-
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import com.example.daily.Journal;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-=======
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -43,7 +19,6 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
->>>>>>> Stashed changes
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // 新增額外功能(使用API)
+        // 新增額外功能 (使用 API)
         findViewById(R.id.btn_search).setOnClickListener(v -> {
             String URL = "https://vbs.sports.taipei/opendata/sports_tms2.json";
 
@@ -76,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             OkHttpClient OkHttpClient = UnsafeOkHttpClient.getUnsafeOKHttpClient();
             OkHttpClient.newCall(request).enqueue(new Callback() {
                 @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                public void onResponse(Call call, Response response) throws IOException {
                     if (response.code() == 200) {
                         if (response.body() == null) return;
                         String json = response.body().string();
@@ -108,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                public void onFailure(Call call, IOException e) {
                     Log.e("查詢失敗", e.getMessage());
                 }
             });
