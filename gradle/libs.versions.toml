@@ -1,8 +1,4 @@
 [versions]
-<<<<<<< HEAD
-=======
-
->>>>>>> b9f325524bb2c8fee26eade33ff1713abc8e1ec6
 agp = "8.6.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"

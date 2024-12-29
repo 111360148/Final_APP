@@ -3,13 +3,8 @@ package com.example.daily;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-<<<<<<< HEAD
-import android.view.View;
 
 import androidx.annotation.NonNull;
-=======
-
->>>>>>> b9f325524bb2c8fee26eade33ff1713abc8e1ec6
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -48,11 +43,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-<<<<<<< HEAD
         // 新增第四個功能
-=======
-        // 新增額外功能 (使用 API)
->>>>>>> b9f325524bb2c8fee26eade33ff1713abc8e1ec6
         findViewById(R.id.btn_search).setOnClickListener(v -> {
             String URL = "https://vbs.sports.taipei/opendata/sports_tms2.json";
 
@@ -61,11 +52,7 @@ public class MainActivity extends AppCompatActivity {
             OkHttpClient OkHttpClient = UnsafeOkHttpClient.getUnsafeOKHttpClient();
             OkHttpClient.newCall(request).enqueue(new Callback() {
                 @Override
-<<<<<<< HEAD
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-=======
-                public void onResponse(Call call, Response response) throws IOException {
->>>>>>> b9f325524bb2c8fee26eade33ff1713abc8e1ec6
                     if (response.code() == 200) {
                         if (response.body() == null) return;
                         String json = response.body().string();
@@ -87,11 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
                         runOnUiThread(() -> {
                             new AlertDialog.Builder(MainActivity.this)
-<<<<<<< HEAD
-                                    .setTitle("臺北市場地資訊")
-=======
                                     .setTitle("臺北市體育局場地資訊")
->>>>>>> b9f325524bb2c8fee26eade33ff1713abc8e1ec6
                                     .setItems(items, null)
                                     .show();
                         });
@@ -101,11 +84,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 @Override
-<<<<<<< HEAD
                 public void onFailure(@NonNull Call call, @NonNull IOException e) {
-=======
-                public void onFailure(Call call, IOException e) {
->>>>>>> b9f325524bb2c8fee26eade33ff1713abc8e1ec6
                     Log.e("查詢失敗", e.getMessage());
                 }
             });
